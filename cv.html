@@ -55,29 +55,38 @@
     </footer>
 
     <script>
-        // Theme Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-
-        // Load saved theme preference
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-            body.classList.add('light-mode');
-            themeToggle.textContent = '🌞';
-        }
-
-        // Theme toggle functionality
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('light-mode');
+        // Initialize theme on page load
+        function initTheme() {
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
             
-            if (body.classList.contains('light-mode')) {
-                localStorage.setItem('theme', 'light');
+            // Check saved preference or default to dark
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            
+            if (savedTheme === 'light') {
+                body.classList.add('light-mode');
                 themeToggle.textContent = '🌞';
             } else {
-                localStorage.setItem('theme', 'dark');
+                body.classList.remove('light-mode');
                 themeToggle.textContent = '🌙';
             }
-        });
+            
+            // Theme toggle button listener
+            themeToggle.addEventListener('click', () => {
+                body.classList.toggle('light-mode');
+                
+                const isLight = body.classList.contains('light-mode');
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                themeToggle.textContent = isLight ? '🌞' : '🌙';
+            });
+        }
+        
+        // Run on load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initTheme);
+        } else {
+            initTheme();
+        }
     </script>
 </body>
 </html>
