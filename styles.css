@@ -77,19 +77,49 @@ body {
     opacity: 0.7;
 }
 
-/* Theme Toggle */
-.theme-toggle {
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
     background: none;
     border: none;
-    color: white;
-    font-size: 1.5rem;
     cursor: pointer;
-    transition: opacity 0.3s ease;
-    padding: 0.5rem;
+    gap: 5px;
 }
 
-.theme-toggle:hover {
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    border-radius: 2px;
+    transition: 0.3s ease;
+}
+
+.hamburger:hover span {
     opacity: 0.7;
+}
+
+/* Floating Theme Toggle */
+.floating-theme-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 999;
+}
+
+.floating-theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 
 /* Hero Section */
@@ -185,8 +215,36 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+    
     .nav-menu {
-        gap: 1rem;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: var(--navbar-bg);
+        flex-direction: column;
+        gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        padding: 0;
+    }
+    
+    .nav-menu.active {
+        max-height: 300px;
+        padding: 1rem 0;
+    }
+    
+    .nav-menu li {
+        padding: 1rem 2rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .nav-menu li:last-child {
+        border-bottom: none;
     }
 
     .hero-content h1 {
@@ -203,6 +261,14 @@ footer {
     }
 
     .section h2 {
+        font-size: 1.5rem;
+    }
+    
+    .floating-theme-toggle {
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
         font-size: 1.5rem;
     }
 }

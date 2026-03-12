@@ -10,15 +10,22 @@
     <nav class="navbar">
         <div class="nav-container">
             <h1 class="logo">Connor Bottrell</h1>
-            <ul class="nav-menu">
+            <button class="hamburger" id="hamburger" title="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="cv.html">CV</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">🌙</button></li>
             </ul>
         </div>
     </nav>
+
+    <!-- Floating Theme Toggle Button -->
+    <button class="floating-theme-toggle" id="themeToggle" title="Toggle dark/light mode">☯</button>
 
     <header id="home" class="hero">
         <div class="hero-content">
@@ -61,10 +68,8 @@
             
             if (savedTheme === 'light') {
                 body.classList.add('light-mode');
-                themeToggle.textContent = '🌞';
             } else {
                 body.classList.remove('light-mode');
-                themeToggle.textContent = '🌙';
             }
             
             // Theme toggle button listener
@@ -73,15 +78,36 @@
                 
                 const isLight = body.classList.contains('light-mode');
                 localStorage.setItem('theme', isLight ? 'light' : 'dark');
-                themeToggle.textContent = isLight ? '🌞' : '🌙';
+            });
+        }
+        
+        // Mobile menu toggle
+        function initMobileMenu() {
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+            
+            hamburger.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+            });
+            
+            // Close menu when a link is clicked
+            const navLinks = navMenu.querySelectorAll('a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                });
             });
         }
         
         // Run on load
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initTheme);
+            document.addEventListener('DOMContentLoaded', () => {
+                initTheme();
+                initMobileMenu();
+            });
         } else {
             initTheme();
+            initMobileMenu();
         }
     </script>
 </body>
